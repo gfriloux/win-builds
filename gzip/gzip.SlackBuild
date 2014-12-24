@@ -29,9 +29,9 @@ else
   do_sse2="--disable-sse2"
 fi
 
-patch -p1 -i $CWD/0001-fix-mingw-port.patch || exit 1
-patch -p0 -i $CWD/0002-fix-sigpipe.patch    || exit 1
-
+patch -p1 -i $CWD/0001-fix-mingw-port.patch       || exit 1
+patch -p0 -i $CWD/0002-fix-sigpipe.patch          || exit 1
+patch -p1 -i $CWD/0003-add-rsyncable-option.patch || exit 1
 autoreconf -if
 
 CFLAGS="-O2" \

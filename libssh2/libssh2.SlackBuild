@@ -5,8 +5,6 @@ VERSION=${VERSION:-$(echo $PKGNAM-*.tar.gz | rev | cut -f 3- -d . | cut -f 1 -d 
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 
-set -x
-
 CWD=$(pwd)
 TMP=${TMP:-/tmp/SBo}
 PKG=$TMP/package-$PKGNAM

@@ -5,13 +5,7 @@ VERSION=${VERSION:-$(echo $PKGNAM-*.tar.gz | rev | cut -f 3- -d . | cut -f 1 -d 
 BUILD=${BUILD:-1}
 TAG=${TAG:-_SBo}
 
-if [ -z "$ARCH" ]; then
-  case "$( uname -m )" in
-    i?86) ARCH=i486 ;;
-    arm*) ARCH=arm ;;
-       *) ARCH=$( uname -m ) ;;
-  esac
-fi
+set -x
 
 CWD=$(pwd)
 TMP=${TMP:-/tmp/SBo}
@@ -43,7 +37,7 @@ LDFLAGS="-L/${PREFIX}/lib${LIBDIRSUFFIX}" \
   --sysconfdir=/${PREFIX}/etc \
   --localstatedir=/${PREFIX}/var \
   --infodir=/${PREFIX}/info \
-  --docdir=/${PREFIX}/doc/$PRGNAM-$VERSION \
+  --docdir=/${PREFIX}/doc/$PKGNAM-$VERSION \
   --disable-static \
   --enable-crypt-none \
   --enable-mac-none \
@@ -58,10 +52,10 @@ make install DESTDIR=$PKG
 find $PKG | xargs file | grep -e "executable" -e "shared object" | grep ELF \
   | cut -f 1 -d : | xargs strip --strip-unneeded 2> /dev/null || true
 
-mkdir -p $PKG/${PREFIX}/doc/$PKGNAM-$VERSION
+mkdir -p $PKG/${PREFIX}/doc/${PKGNAM}-$VERSION
 cp -a \
   ABOUT-NLS AUTHORS COPYING* INSTALL* NEWS PACKAGERS README* THANKS \
-  $PKG/${PREFIX}/doc/$PKGNAM-$VERSION
+  $PKG/${PREFIX}/doc/${PKGNAM}-$VERSION
 
 # If there's a ChangeLog, installing at least part of the recent history
 # is useful, but don't let it get totally out of control:

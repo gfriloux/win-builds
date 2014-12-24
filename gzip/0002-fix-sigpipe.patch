@@ -1,0 +1,15 @@
+--- gzip.c      2014-12-24 14:24:13.996437589 +0100
++++ gzip.c      2014-12-24 14:18:05.162380259 +0100
+@@ -557,7 +557,11 @@ int main (int argc, char **argv)
+     ALLOC(ush, tab_prefix1, 1L<<(BITS-1));
+ #endif
+ 
++#ifdef SIGPIPE
+     exiting_signal = quiet ? SIGPIPE : 0;
++#else
++    exiting_signal = 0;
++#endif
+     install_signal_handlers ();
+ 
+     /* And get to work */
+

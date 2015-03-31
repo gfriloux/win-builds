@@ -33,7 +33,7 @@ patch -p0 -i $CWD/0001-use-cares.patch || exit 1
 
 autoreconf -if
 
-CFLAGS="-O2 -g3 -ggdb" \
+CFLAGS="-O2" \
 CXXFLAGS="-O2" \
 LDFLAGS="-L/${PREFIX}/lib${LIBDIRSUFFIX}" \
 ./configure \
@@ -72,7 +72,6 @@ LDFLAGS="-L/${PREFIX}/lib${LIBDIRSUFFIX}" \
   --disable-ecore-x-dri \
   --disable-ecore-imf \
   --disable-ecore-fb \
-  STRIP=true \
   ${do_sse2}
 
 make -j4 || exit 1

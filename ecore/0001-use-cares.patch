@@ -1,0 +1,12 @@
+--- configure.ac        2015-02-20 15:38:46.000000000 +0100
++++ configure.ac.new    2015-03-20 14:14:52.091655162 +0100
+@@ -102,7 +102,7 @@ want_local_sockets="yes"
+ want_abstract_sockets="no"
+ want_gnutls="no"
+ want_openssl="no"
+-want_cares="no"
++want_cares="yes"
+ want_cipher="no"
+ want_signature="no"
+ want_poll="yes"
+

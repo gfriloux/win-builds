@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PKGNAM=ecore
+PKGNAM=botman
 VERSION=${VERSION:-$(echo $PKGNAM-*.tar.gz | rev | cut -f 3- -d . | cut -f 1 -d - | rev)}
 BUILD=${BUILD:-1}
 
@@ -23,15 +23,10 @@ find . \
   \( -perm 666 -o -perm 664 -o -perm 600 -o -perm 444 -o -perm 440 -o -perm 400 \) \
   -exec chmod 644 {} \;
 
-if echo "${HOST_TRIPLET}" | grep -q '$x86_64-'; then
-  do_sse2="--enable-sse2"
-else
-  do_sse2="--disable-sse2"
-fi
+export ac_cv_func_malloc_0_nonnull=yes
+export ac_cv_func_realloc_0_nonnull=yes
 
-#patch -p0 -i $CWD/0001-use-cares.patch || exit 1
-
-autoreconf -if
+autoreconf -vif
 
 CFLAGS="-O2" \
 CXXFLAGS="-O2" \
@@ -44,37 +39,10 @@ LDFLAGS="-L/${PREFIX}/lib${LIBDIRSUFFIX}" \
   --infodir=/${PREFIX}/info \
   --mandir=/${PREFIX}/man \
   --disable-static \
-  --disable-vmx \
   --host=${HOST_TRIPLET} \
-  --disable-install-examples \
-  --disable-ecore-input \
-  --disable-ecore-input-evas \
-  --disable-ecore-x \
-  --disable-ecore-evas \
-  --disable-glib \
-  --disable-tslib \
-  --disable-xim \
-  --disable-ecore-x-composite \
-  --disable-ecore-x-damage \
-  --disable-ecore-x-dpms \
-  --disable-ecore-x-randr \
-  --disable-ecore-x-render \
-  --disable-ecore-x-screensaver \
-  --disable-ecore-x-shape \
-  --enable-ecore-x-gesture \
-  --disable-ecore-x-sync \
-  --disable-ecore-x-xfixes \
-  --disable-ecore-x-xprint \
-  --disable-ecore-x-xtest \
-  --disable-ecore-x-xinerama \
-  --disable-ecore-x-cursor \
-  --disable-ecore-x-input \
-  --disable-ecore-x-dri \
-  --disable-ecore-imf \
-  --disable-ecore-fb \
-  ${do_sse2}
+  --build=${BUILD_TRIPLET}
 
-make -j4 || exit 1
+make V=1 -j4 || exit 1
 make DESTDIR=$PKG install
 
 # Strip binaries:

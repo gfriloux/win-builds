@@ -29,7 +29,7 @@ else
   do_sse2="--disable-sse2"
 fi
 
-patch -p0 -i $CWD/0001-use-cares.patch || exit 1
+#patch -p0 -i $CWD/0001-use-cares.patch || exit 1
 
 autoreconf -if
 
@@ -72,7 +72,6 @@ LDFLAGS="-L/${PREFIX}/lib${LIBDIRSUFFIX}" \
   --disable-ecore-x-dri \
   --disable-ecore-imf \
   --disable-ecore-fb \
-  --disable-ipv6 \
   ${do_sse2}
 
 make -j4 || exit 1
